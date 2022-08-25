@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: client
+  security:
+    oauth2:
+      client:
+        registration:
+          articles-client-oidc:
+            provider: spring
+            client-id: articles-client
+            client-secret: secret
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: articles-client-oidc
+          articles-client-authorization-code:
+            provider: spring
+            client-id: articles-client
+            client-secret: secret
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8080/authorized"
+            scope: articles.read
+            client-name: articles-client-authorization-code
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
+
+  datasource:
+    url: jdbc:postgresql://192.168.2.40:5432/auth_server?serverTimezone=UTC
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+#jwt:
+#  secret : access
+#  refresh:
+#    secret: refresh
+#  token:
+#    expired: 3600000

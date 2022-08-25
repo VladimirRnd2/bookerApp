@@ -1,0 +1,19 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.2.40:5432/auth_server?serverTimezone=UTC
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update

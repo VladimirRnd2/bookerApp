@@ -1,0 +1,133 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="1.0.0" author="com.zuzex">
+        <createTable tableName="books">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="varchar(250)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="date" type="varchar(50)">
+            </column>
+
+            <column name="is_read" type="boolean" defaultValueBoolean="false">
+            </column>
+
+            <column name="created" type="timestamp" defaultValueDate="current_timestamp()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="timestamp" defaultValueDate="current_timestamp()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar(25)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="com.zuzex">
+        <createTable tableName="authors">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="created" type="timestamp" defaultValueDate="current_timestamp()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="timestamp" defaultValueDate="current_timestamp()" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar(25)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="com.zuzex">
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="login" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="com.zuzex">
+        <createTable tableName="users_books">
+            <column name="user_id" type="bigint">
+            </column>
+            <column name="book_id" type="bigint">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="com.zuzex">
+        <createTable tableName="books_authors">
+            <column name="book_id" type="bigint">
+            </column>
+            <column name="author_id" type="bigint">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="com.zuzex">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="users_books"
+                                 constraintName="fk_users_books_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="com.zuzex">
+        <addForeignKeyConstraint baseColumnNames="book_id"
+                                 baseTableName="users_books"
+                                 constraintName="fk_users_books_book"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="books"/>
+    </changeSet>
+
+    <changeSet id="1.0.7" author="com.zuzex">
+        <addForeignKeyConstraint baseColumnNames="book_id"
+                                 baseTableName="books_authors"
+                                 constraintName="fk_books_authors_book"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="books"/>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="com.zuzex">
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="books_authors"
+                                 constraintName="fk_books_authors_author"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="authors"/>
+    </changeSet>
+</databaseChangeLog>
